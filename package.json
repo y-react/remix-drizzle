@@ -1,0 +1,17 @@
+{
+  "name": "remix-drizzle",
+  "version": "1.0.0",
+  "description": "Remix Drizzle template",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/y-react/remix-drizzle.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/y-react/remix-drizzle#readme",
+  "workspaces": [
+    "packages/create-remix-drizzle"
+  ],
+  "dependencies": {
+    "commander": "^12.1.0"
+  }
+}

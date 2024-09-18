@@ -1,0 +1,10 @@
+{
+  "name": "create-remix-drizzle",
+  "version": "1.0.0",
+  "description": "Create Remix Drizzle app",
+  "type": "module",
+  "scripts": {
+    "init": "node commands/init"
+  },
+  "license": "MIT"
+}

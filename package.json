@@ -10,8 +10,5 @@
   "homepage": "https://github.com/y-react/remix-drizzle#readme",
   "workspaces": [
     "packages/create-remix-drizzle"
-  ],
-  "dependencies": {
-    "commander": "^12.1.0"
-  }
+  ]
 }

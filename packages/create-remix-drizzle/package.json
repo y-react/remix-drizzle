@@ -6,6 +6,8 @@
   "scripts": {
     "init": "node commands/init"
   },
+  "main": "commands/init.js",
+  "bin": "commands/init.js",
   "license": "MIT",
   "dependencies": {
     "commander": "^12.1.0",

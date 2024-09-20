@@ -8,6 +8,7 @@
   },
   "license": "MIT",
   "homepage": "https://github.com/y-react/remix-drizzle#readme",
+  "main": "packages/create-remix-drizzle/commands/init.js",
   "workspaces": [
     "packages/create-remix-drizzle"
   ]

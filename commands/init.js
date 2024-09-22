@@ -28,6 +28,7 @@ const inlineEdit = (fileName, search, replace) => {
   console.log(`Edited ${fileName}`);
 };
 
+// npm exec github:y-react/remix-drizzle
 const program = createCommand();
 program.name('init').version('1.0.0').description('Initilise the template');
 
@@ -48,6 +49,16 @@ program.description('Initilise the template').action(async (str, options) => {
     }
   );
 
+  // compose.yaml
+  cp(
+    path.resolve(templateFolder, 'compose.yaml'),
+    path.resolve(currentFolder, 'compose.yaml'),
+    { force: true },
+    (err) => {
+      if (err) throw err;
+      console.log(`Copy ${templateFolder}/compose.yaml ${currentFolder}`);
+    }
+  );
   // tailwind.config.ts
   cp(
     path.resolve(templateFolder, 'tailwind.config.ts'),

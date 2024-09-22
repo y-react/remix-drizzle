@@ -1,0 +1,26 @@
+# docker compose up --build --remove-orphans --watch
+# docker compose down
+# docker compose run -it --rm -v ${PWD}:/src node_app bash
+# docker system prune --all --volumes
+services:
+  node_app:
+    image: node_app
+    build:
+      context: .
+      dockerfile: ../Node.dockerfile
+      args:
+        WRKDIR_ARG: "/src"
+    working_dir: "/src"
+    ports:
+      - 8788:8788
+    develop:
+      watch:
+        - action: sync
+          path: ./app
+          target: "/src/app"
+          ignore:
+            - node_modules/
+        - path: package.json
+          action: rebuild
+          ignore:
+            - node_modules/

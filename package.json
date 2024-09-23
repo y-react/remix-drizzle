@@ -10,10 +10,10 @@
     "url": "git+https://github.com/y-react/remix-drizzle.git"
   },
   "scripts": {
-    "init": "node commands/init"
+    "create": "node commands/create"
   },
-  "main": "commands/init.js",
-  "bin": "commands/init.js",
+  "main": "commands/create.js",
+  "bin": "commands/create.js",
   "workspaces": [
     "packages/create-remix-drizzle"
   ],

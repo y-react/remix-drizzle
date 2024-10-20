@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  html,
+  body {
+    @apply bg-slate-100 dark:bg-slate-900;
+
+    @media (prefers-color-scheme: dark) {
+      color-scheme: dark;
+    }
+  }
+}
+@layer components {
+  .data-d > span:before {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    content: attr(data-d) '\0040' attr(data-u);
+  }
+  .data-u > span:before {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    content: attr(data-u);
+  }
+  .flip-x {
+    @apply scale-x-[-1];
+  }
+  .flip-y {
+    @apply scale-y-[-1];
+  }
+}
+@layer utilities {
+  .sun,
+  .moon {
+    @apply hidden;
+    transition: visibility 0s 0.5s;
+  }
+
+  html.dark .moon,
+  html.light .sun {
+    @apply inline;
+    animation: rotate 1s ease-out;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(-45deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
+
+  .debug {
+    @apply border border-pink-600;
+  }
+}

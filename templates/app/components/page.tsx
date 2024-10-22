@@ -1,7 +1,7 @@
 import { Link } from 'componentry/components';
 
 import { SvgImage } from '~/common/components//SvgImage';
-import { footConfig, imgConfig } from '~/config';
+import { footConfig, headConfig, imgConfig } from '~/config';
 
 // https://developer.mozilla.org/en-US/docs/Web/SVG/Applying_SVG_effects_to_HTML_content
 export function Header() {
@@ -18,13 +18,13 @@ export function Header() {
             <div className="flex flex-col items-center pt-1 md:pt-3">
               <div className="flex flex-col items-end">
                 <p className="font-maharlika break-normal text-3xl uppercase text-slate-700 dark:text-slate-400 md:text-7xl md:tracking-[.25em]">
-                  APP LOGO
+                  {headConfig.meta[0].title}
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <span className="sr-only">{footConfig.title}</span>
+        <span className="sr-only">{headConfig.meta[0].title}</span>
       </Link>
     </header>
   );

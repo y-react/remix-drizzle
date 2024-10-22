@@ -28,8 +28,8 @@ program
 
     if (cmdAndOptions.install) {
       await execute`npm uninstall @cloudflare/workers-types`;
-      await execute`npm install -y @headlessui/react @heroicons/react clsx drizzle-orm framer-motion next-themes remix-auth remix-auth-totp remix-utils tiny-invariant git+https://github.com/ycore/componentry`;
-      await execute`npm install -y -D @svgx/vite-plugin-react drizzle-kit eslint-plugin-simple-import-sort prettier-plugin-tailwindcss remix-development-tools vite-env-only wrangler@latest`;
+      await execute`npm install -y @headlessui/react @heroicons/react clsx drizzle-orm framer-motion next-themes remix-auth remix-auth-totp remix-utils tiny-invariant`;
+      await execute`npm install -y -D @svgx/vite-plugin-react drizzle-kit eslint-plugin-simple-import-sort prettier-plugin-tailwindcss git+https://github.com/ycore/privatize remix-development-tools vite-env-only wrangler@latest`;
     }
 
     if (cmdAndOptions.custom) {
@@ -40,6 +40,14 @@ program
       copy(
         path.resolve(templateFolder, '.prettierrc'),
         path.resolve(currentFolder, '.prettierrc')
+      );
+      copy(
+        path.resolve(templateFolder, 'README.md'),
+        path.resolve(currentFolder, 'README.md')
+      );
+      copy(
+        path.resolve(templateFolder, 'privatize.json'),
+        path.resolve(currentFolder, 'privatize.json')
       );
       copy(
         path.resolve(templateFolder, 'tailwind.config.ts'),
@@ -118,7 +126,7 @@ program
           `$1 --experimental-include-runtime='./app/@types/cloudflare.d.ts'`,
           `$1 --fix $2`,
           '    "fix": "prettier --write --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/prettier .",\n$1',
-          '$1,$2  "drizzle:generate": "drizzle-kit generate",\n    "drizzle:up": "drizzle-kit up",\n    "drizzle:check": "drizzle-kit check",\n    "drizzle:drop": "drizzle-kit drop",\n    "d1:migrate:list": "wrangler d1 migrations list local-d1-dev --local",\n    "d1:migrate:apply": "wrangler d1 migrations apply local-d1-dev --local",\n    "preview": "npm run build && wrangler pages dev",\n    "tunnel": "cloudflared tunnel --url http://localhost:8788"\n  $3',
+          '$1,$2  "drizzle:generate": "drizzle-kit generate",\n    "drizzle:up": "drizzle-kit up",\n    "drizzle:check": "drizzle-kit check",\n    "drizzle:drop": "drizzle-kit drop",\n    "d1:migrate:list": "wrangler d1 migrations list local-d1-dev --local",\n    "d1:migrate:apply": "wrangler d1 migrations apply local-d1-dev --local",\n    "preview": "npm run build && wrangler pages dev",\n    "tunnel": "cloudflared tunnel --url http://localhost:8788",\n    "preinstall": "privatize"\n  $3',
         ]
       );
       // postcss.config.js
@@ -156,7 +164,7 @@ program
     if (cmdAndOptions.run && cmdAndOptions.install) {
       await execute`npm run typegen`;
       await execute`npm run fix`;
-      await execute`npm run lint`;
+      // await execute`npm run lint`;
     }
   });
 

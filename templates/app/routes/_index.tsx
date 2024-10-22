@@ -10,11 +10,11 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <>
+    <main className="h-screen">
       <Header />
       <NavMenu className="mb-6 flex-row justify-between" />
       <section>
-        <div className="flex h-screen items-center justify-center">
+        <div className="flex items-center justify-center">
           <div className="flex flex-col items-center">
             <header className="flex flex-col items-center">
               <p>{headConfig.meta[0].title}</p>
@@ -23,6 +23,6 @@ export default function Index() {
         </div>
       </section>
       <Footer />
-    </>
+    </main>
   );
 }

@@ -36,7 +36,7 @@ export function Script() {
 
 export function Footer() {
   return (
-    <footer className="flex w-full flex-col items-center bg-opacity-100 pb-8 pt-12 print:hidden">
+    <footer className="sticky top-[100vh] flex w-full flex-col items-center bg-opacity-100 pb-8 pt-12 print:hidden">
       <p className="font-lato-100 text-xs uppercase text-opacity-30">
         Copyright © {footConfig.title} {footConfig.from} - {footConfig.to()}
       </p>

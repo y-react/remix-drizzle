@@ -8,9 +8,9 @@ import './tailwind.css';
 export const links: LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
-  { rel: 'preconnect', href: 'https://fontary.pages.dev', crossOrigin: 'anonymous' },
+  { rel: 'preconnect', href: 'https://fontary.org', crossOrigin: 'anonymous' },
   { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap' },
-  { rel: 'stylesheet', href: 'https://fontary.pages.dev/css?family=maharlika,wght@0,400&display=swap' },
+  { rel: 'stylesheet', href: 'https://fontary.org/css?family=maharlika,wght@0,400&display=swap' },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {

@@ -2,10 +2,10 @@
 
 ## Remix
 
-| Remix                                                                | Styling                                             | Database                                    | Vite                                                              |
+| Remix                                                                | Styling                                             | Database                                    | Vite & Cloudflare                                                             |
 | -------------------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------- | ----------------------------------------------------------------- |
 | 📖 [Remix docs](https://remix.run/docs)                              | 📖 [Headless UI](https://headlessui.com/)           | 📖 [Drizzle ORM](https://orm.drizzle.team/) | 📖 [Vite docs on css](https://vitejs.dev/guide/features.html#css) |
-| 📖 [Remix Cloudflare docs](https://remix.run/guides/vite#cloudflare) | 📖 [Catalyst](https://catalyst.tailwindui.com/docs) |                                             |                                                                   |
+| 📖 [Remix Cloudflare docs](https://remix.run/guides/vite#cloudflare) | 📖 [Catalyst](https://catalyst.tailwindui.com/docs) |                                             |                                                                   [Cloudflare API](https://developers.cloudflare.com/api/operations/pages-project-get-projects) |
 |                                                                      | 📖 [Tailwind CSS](https://tailwindcss.com/)         |                                             |                                                                   |
 
 ## Development

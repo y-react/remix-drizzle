@@ -16,9 +16,9 @@ export function ThemeSwitcher() {
   if (!mounted) return null;
 
   return (
-    <Button plain={true} onClick={() => setTheme(theme === themes.dark ? themes.light : themes.dark)} aria-label="theme switch">
+    <Button.Button plain={true} onClick={() => setTheme(theme === themes.dark ? themes.light : themes.dark)} aria-label="theme switch">
       <MoonIcon className="sun" />
       <SunIcon className="moon" />
-    </Button>
+    </Button.Button>
   );
 }

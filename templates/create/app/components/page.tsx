@@ -7,7 +7,7 @@ import { footConfig, headConfig, imgConfig } from '~/config';
 export function Header() {
   return (
     <header className="print:hidden">
-      <Link href="/">
+      <Link.Link href="/">
         <div className="flex flex-col md:py-8 md:pl-8">
           <div className="flew-row flex w-full justify-around md:justify-start md:gap-x-8">
             <SvgImage
@@ -25,7 +25,7 @@ export function Header() {
           </div>
         </div>
         <span className="sr-only">{headConfig.meta[0].title}</span>
-      </Link>
+      </Link.Link>
     </header>
   );
 }

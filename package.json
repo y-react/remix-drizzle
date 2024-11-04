@@ -9,16 +9,16 @@
     "type": "git",
     "url": "git+https://github.com/y-react/remix-drizzle.git"
   },
-  "scripts": {
-    "create": "node commands/create"
+  "bin": {
+    "index": "src/commands/index.js"
   },
-  "main": "commands/create.js",
-  "bin": "commands/create.js",
-  "workspaces": [
-    "packages/create-remix-drizzle"
-  ],
   "dependencies": {
     "commander": "^12.1.0",
-    "execa": "^9.4.0"
+    "confbox": "^0.1.8",
+    "execa": "^9.4.0",
+    "wrangler": "^3.84.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
   }
 }

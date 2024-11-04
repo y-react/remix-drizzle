@@ -1,10 +1,17 @@
-import { cp, unlink, readFileSync, writeFileSync } from 'node:fs';
+import { cp, unlink, readFile, readFileSync, writeFileSync } from 'node:fs';
 import { execa } from 'execa';
 import path from 'node:path';
 export { default as path } from 'node:path';
 
+export { execa, readFile, readFileSync };
+
+export const exec = async (...cmd) => {
+  await execa({ stdout: process.stdout, stderr: process.stderr })(...cmd);
+  return { stdout, stderr };
+};
+
 export const execute = async (...cmd) => {
-  await execa({ stdout: process.stdout, stderr: process.stdout })(...cmd);
+  await execa({ stdout: process.stdout, stderr: process.stderr })(...cmd);
 };
 
 export const execsh = async (...cmd) => {

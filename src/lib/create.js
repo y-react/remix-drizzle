@@ -91,13 +91,6 @@ export const create = {
     else await execute`git commit -m "${message}"`;
   },
 
-  doCopy: async () => {
-    copy(
-      path.resolve(currentFolder, 'package.json'),
-      path.resolve(currentFolder, 'package2.json')
-    );
-  },
-
   doCustomise: async () => {
     copy(path.resolve(templateFolder), path.resolve(currentFolder));
     rm(path.resolve(currentFolder, 'load-context.ts'));

@@ -80,7 +80,6 @@ program
     await create.doCreate();
     await create.doGitInit('y-core@outlook.com', 'Johan Meyer');
     await create.doGitCommit('Initial Create', '--quiet');
-    await create.doCopy();
     await create.doEditPackage();
     await create.doSortPackage();
     await create.doCheckUpdates();

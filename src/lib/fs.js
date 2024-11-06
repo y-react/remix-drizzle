@@ -1,9 +1,13 @@
 import { cp, unlink, readFile, readFileSync, writeFileSync } from 'node:fs';
+// import pkg from 'fs-extra';
+// const { readJson, writeJson } = pkg;
+import { readJson, writeJson } from 'fs-extra/esm';
+
 import { execa } from 'execa';
 import path from 'node:path';
 export { default as path } from 'node:path';
 
-export { execa, readFile, readFileSync };
+export { execa, readFile, readFileSync, readJson, writeJson };
 
 export const exec = async (...cmd) => {
   await execa({ stdout: process.stdout, stderr: process.stderr })(...cmd);

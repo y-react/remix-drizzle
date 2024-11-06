@@ -16,6 +16,7 @@
     "commander": "^12.1.0",
     "confbox": "^0.1.8",
     "execa": "^9.4.0",
+    "fs-extra": "^11.2.0",
     "wrangler": "^3.84.1"
   },
   "devDependencies": {

@@ -1,9 +1,22 @@
-import { copy, execute, path, rm, inlineEdit, execsh } from './fs.js';
+import {
+  copy,
+  execute,
+  path,
+  rm,
+  inlineEdit,
+  execsh,
+  readJson,
+  writeJson,
+} from './fs.js';
 
 const currentFolder = process.cwd();
 const templateFolder = path.resolve(
   import.meta.dirname,
   '../../templates/create/'
+);
+const editsFolder = path.resolve(
+  import.meta.dirname,
+  '../../templates/create.edits/'
 );
 
 export const create = {
@@ -18,20 +31,71 @@ export const create = {
     ]);
   },
 
-  doPrepare: async () => {
+  doInstall: async () => {
     await execute`npm install -y`;
   },
 
   doRun: async () => {
-    await execute`npm run typegen`;
-    await execute`npm run fix`;
+    await execute`npm run dev:types`;
+    await execute`npm run dev:pretty`;
   },
 
-  doInstall: async () => {
-    await execute`ncu --target minor --upgrade`;
-    await execute`npm uninstall @cloudflare/workers-types`;
-    await execute`npm install -y --progress=false @headlessui/react @heroicons/react @tsndr/cloudflare-worker-jwt clsx drizzle-orm framer-motion next-themes remix-auth remix-auth-totp remix-utils tiny-invariant`;
-    await execute`npm install -y -D --progress=false @svgx/vite-plugin-react drizzle-kit eslint-plugin-simple-import-sort knip prettier-plugin-tailwindcss git+https://github.com/ycore/privatize remix-development-tools vite-env-only wrangler@latest`;
+  doCheckUpdates: async () => {
+    await execute`npx --yes npm-check-updates@latest --target minor --upgrade`;
+  },
+
+  doEditPackage: async () => {
+    try {
+      const packageJsonPath = path.resolve(currentFolder, 'package.json');
+      const changesJsonPath = path.resolve(editsFolder, 'package-changes.json');
+      const packageJson = await readJson(packageJsonPath);
+      const changesJson = await readJson(changesJsonPath);
+
+      const updatedPackageJson = mergeJSON(packageJson, changesJson);
+
+      await writeJson(packageJsonPath, updatedPackageJson, { spaces: 2 });
+
+      console.log('package.json has been updated successfully!');
+    } catch (error) {
+      console.error('Error updating package.json:', error);
+    }
+  },
+
+  doSortPackage: async () => {
+    await execute`npx --yes sort-package-json@latest`;
+  },
+
+  /**
+   *
+   * @param {string} email
+   * @param {string} name
+   */
+  doGitInit: async (email, name) => {
+    await execute`git config --global init.defaultBranch main`;
+    await execute`git config --global user.email "${email}"`;
+    await execute`git config --global user.name "${name}"`;
+    await execute`git init`;
+    await execute`git branch -m main`;
+    await execute`git checkout -b production`;
+    await execute`git checkout -b main`;
+  },
+
+  /**
+   *
+   * @param {string} message
+   * @param {string} options
+   */
+  doGitCommit: async (message, options) => {
+    await execute`git add .`;
+    if (options) await execute`git commit ${options} -m "${message}"`;
+    else await execute`git commit -m "${message}"`;
+  },
+
+  doCopy: async () => {
+    copy(
+      path.resolve(currentFolder, 'package.json'),
+      path.resolve(currentFolder, 'package2.json')
+    );
   },
 
   doCustomise: async () => {
@@ -57,45 +121,6 @@ export const create = {
           { groups: [ ['^react', '^@?\\\\w'], ['^(@remix-run)(/.*|$)'], ['^(@env)(/.*|$)'], ['^\\\\.\\\\./?'], ['^\\\\./?'], ["\\\\.?(css)$"], ], },
         ],
       },`,
-      ]
-    );
-
-    // "scripts": {
-    //   "dev": "remix vite:dev",
-    //   "dev:lint": "eslint --fix --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    //   "dev:pretty": "prettier --write --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/prettier .",
-    //   "dev:knip": "knip",
-    //   "dev:tsc": "tsc",
-    //   "dev:types": "wrangler types --experimental-include-runtime='./app/@types/cloudflare.d.ts'",
-    //   "db:check": "drizzle-kit check --config ./db/drizzle/drizzle.config.json",
-    //   "db:generate": "drizzle-kit generate  --config ./db/drizzle/drizzle.config.json",
-    //   "db:list": "wrangler d1 migrations list fontary_main_d1 --local",
-    //   "db:apply": "wrangler d1 migrations apply fontary_main_d1 --local",
-    //   "db:prev:info": "wrangler d1 info fontary_main_d1 --env preview",
-    //   "db:prev:list": "wrangler d1 migrations list fontary_main_d1 --env preview --remote",
-    //   "db:prev:apply": "wrangler d1 migrations apply fontary_main_d1 --env preview --remote",
-    //   "db:prod:info": "wrangler d1 info fontary_main_d1 --env production",
-    //   "db:prod:list": "wrangler d1 migrations list fontary_main_d1 --env production --remote",
-    //   "db:prod:apply": "wrangler d1 migrations apply fontary_main_d1 --env production --remote",
-    //   "preinstall": "privatize"
-    // },
-
-    // package.json scripts
-    inlineEdit(
-      './package.json',
-      [
-        /(wrangler.*? types)/i,
-        /(eslint)[ ]*?(--ignore-path)/i,
-        /(^.*?start[^:]*:)/gim,
-        /(\")([\r\n].*?)(\},[\s\S]*?"dependencies":)/gim,
-        /(\})([\r|\n]*?\})/gim,
-      ],
-      [
-        `$1 --experimental-include-runtime='./app/@types/cloudflare.d.ts'`,
-        `$1 --fix $2`,
-        '    "fix": "prettier --write --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/prettier .",\n$1',
-        '$1,$2  "knip": "knip",\n    "db:generate": "drizzle-kit generate",\n    "db:check": "drizzle-kit check",\n    "d1:list": "wrangler d1 migrations list local-d1-dev --local",\n    "d1:apply": "wrangler d1 migrations apply local-d1-dev --local",\n    "preinstall": "privatize"\n  $3',
-        '$1,\n  "overrides": {\n    "glob": "^9.0.0",\n    "rimraf": "^4.0.0"\n  }$2',
       ]
     );
     // postcss.config.js
@@ -130,3 +155,42 @@ export const create = {
     );
   },
 };
+
+/**
+ *
+ * @param {string[]} packageJson
+ * @param {string[]} changesJson
+ * @returns
+ */
+function mergeJSON(packageJson, changesJson) {
+  // Iterate through each key in changesJson
+  for (const key in changesJson) {
+    if (changesJson.hasOwnProperty(key)) {
+      const changeValue = changesJson[key];
+
+      // Handle deletion: If the key starts with "-", remove it from packageJson
+      if (key.startsWith('-')) {
+        const keyToRemove = key.slice(1); // Remove the "-" from the key
+        delete packageJson[keyToRemove];
+      } else {
+        // Otherwise, just update or add the key
+        if (
+          typeof changeValue === 'object' &&
+          !Array.isArray(changeValue) &&
+          changeValue !== null
+        ) {
+          // If the value is an object, recursively merge
+          if (!packageJson[key]) {
+            packageJson[key] = {};
+          }
+          mergeJSON(packageJson[key], changeValue);
+        } else {
+          // Otherwise, just overwrite or add the key directly
+          packageJson[key] = changeValue;
+        }
+      }
+    }
+  }
+
+  return packageJson;
+}

@@ -78,14 +78,21 @@ program
   .action(async (cmdAndOptions) => {
     if (cmdAndOptions.delete) await create.doDelete();
     await create.doCreate();
-    if (cmdAndOptions.install) await create.doInstall();
+    await create.doGitInit('y-core@outlook.com', 'Johan Meyer');
+    await create.doGitCommit('Initial Create', '--quiet');
+    await create.doCopy();
+    await create.doEditPackage();
+    await create.doSortPackage();
+    await create.doCheckUpdates();
+    await create.doGitCommit('Update packages', '--quiet');
     if (cmdAndOptions.custom) await create.doCustomise();
     if (cmdAndOptions.install) {
-      await create.doPrepare();
+      await create.doInstall();
       if (cmdAndOptions.run) {
         await create.doRun();
       }
     }
+    await create.doGitCommit('Overlay template', '--quiet');
   });
 
 program.parse();

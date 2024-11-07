@@ -84,10 +84,14 @@ program
     await create.doSortPackage();
     await create.doCheckUpdates();
     await create.doGitCommit('Update packages', '--quiet');
-    if (cmdAndOptions.custom) await create.doCustomise();
+    if (cmdAndOptions.custom) {
+      await create.doCustomise();
+    }
+
     if (cmdAndOptions.install) {
       await create.doInstall();
       if (cmdAndOptions.run) {
+        await create.doEditWrangler();
         await create.doRun();
       }
     }

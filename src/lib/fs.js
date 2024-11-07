@@ -4,7 +4,6 @@ import { cp, unlink, readFile, readFileSync, writeFileSync } from 'node:fs';
 import { readJson, writeJson } from 'fs-extra/esm';
 
 import { execa } from 'execa';
-import path from 'node:path';
 export { default as path } from 'node:path';
 
 export { execa, readFile, readFileSync, readJson, writeJson };
@@ -22,21 +21,36 @@ export const execsh = async (...cmd) => {
   await execa({ shell: true })(...cmd);
 };
 
-export const copy = (fileName, toFolder) => {
-  cp(fileName, toFolder, { force: true, recursive: true }, (err) => {
+/**
+ *
+ * @param {string} fileName
+ * @param {string} toFolder
+ */
+export const copy = async (fileName, toFolder) => {
+  await cp(fileName, toFolder, { force: true, recursive: true }, (err) => {
     if (err) throw err;
     console.log(`Copy ${fileName} ${toFolder}`);
   });
 };
 
-export const rm = (fileName) => {
-  unlink(fileName, (err) => {
+/**
+ *
+ * @param {string} fileName
+ */
+export const rm = async (fileName) => {
+  await unlink(fileName, (err) => {
     if (err) throw err;
     console.log(`Delete ${fileName}`);
   });
 };
 
-export const inlineEdit = (fileName, search, replace) => {
+/**
+ *
+ * @param {string} fileName
+ * @param {RegExp | RegExp[]} search
+ * @param {string | string[]} replace
+ */
+export const inlineEdit = async (fileName, search, replace) => {
   if (!Array.isArray(search)) search = [search];
   if (!Array.isArray(replace)) replace = [replace];
 
@@ -50,4 +64,43 @@ export const inlineEdit = (fileName, search, replace) => {
 
   writeFileSync(fileName, fileContents, 'utf-8');
   console.log(`Edit ${fileName}`);
+};
+
+/**
+ *
+ * @param {string[]} packageJson
+ * @param {string[]} changesJson
+ * @returns
+ */
+export const mergeJSON = (packageJson, changesJson) => {
+  // Iterate through each key in changesJson
+  for (const key in changesJson) {
+    if (changesJson.hasOwnProperty(key)) {
+      const changeValue = changesJson[key];
+
+      // Handle deletion: If the key starts with "-", remove it from packageJson
+      if (key.startsWith('-')) {
+        const keyToRemove = key.slice(1); // Remove the "-" from the key
+        delete packageJson[keyToRemove];
+      } else {
+        // Otherwise, just update or add the key
+        if (
+          typeof changeValue === 'object' &&
+          !Array.isArray(changeValue) &&
+          changeValue !== null
+        ) {
+          // If the value is an object, recursively merge
+          if (!packageJson[key]) {
+            packageJson[key] = {};
+          }
+          mergeJSON(packageJson[key], changeValue);
+        } else {
+          // Otherwise, just overwrite or add the key directly
+          packageJson[key] = changeValue;
+        }
+      }
+    }
+  }
+
+  return packageJson;
 };

@@ -1,5 +1,5 @@
 #:schema node_modules/wrangler/config-schema.json
-name = "todo_remix_project"
+name = "#PROJECT_NAME#"
 compatibility_date = "2024-09-09"
 pages_build_output_dir = "./build/client"
 send_metrics = false
@@ -10,7 +10,7 @@ vars = { ENVIRONMENT = "production" }
 #   { binding = "MAIN_KV", id = "TODO:" },
 # ]
 # d1_databases = [
-#   { binding = "MAIN_D1", database_id = "n/a", database_name = "d1_main", migrations_table = "d1_migrations", migrations_dir = "db/drizzle"},
+#   { binding = "MAIN_D1", database_id = "n/a", database_name = "d1_#PROJECT_NAME#", migrations_table = "d1_migrations", migrations_dir = "db/drizzle"},
 # ]
 
 # ##################### PREVIEW #####################
@@ -20,7 +20,7 @@ vars = { ENVIRONMENT = "preview" }
 #   { binding = "MAIN_KV", id = "TODO:" },
 # ]
 # d1_databases = [
-#   { binding = "MAIN_D1", database_id = "n/a", database_name = "d1_main", migrations_table = "d1_migrations", migrations_dir = "db/drizzle"},
+#   { binding = "MAIN_D1", database_id = "n/a", database_name = "d1_#PROJECT_NAME#", migrations_table = "d1_migrations", migrations_dir = "db/drizzle"},
 # ]
 
 [dev]

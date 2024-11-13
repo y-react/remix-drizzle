@@ -1,0 +1,8 @@
+{
+  "name": "remix.init",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "@inquirer/prompts": "^7.1.0"
+  }
+}

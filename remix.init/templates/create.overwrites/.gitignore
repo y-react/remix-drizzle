@@ -2,6 +2,7 @@ node_modules
 
 /.cache
 /build
+/remix.init
 .env
 .dev.vars
 

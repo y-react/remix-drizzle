@@ -10,7 +10,7 @@ export const navConfig = {
       items: [{ label: 'Home', url: '/', tag: <HomeIcon /> }],
     },
     {
-      items: [{ tag: <Divider.Divider /> }, { label: 'Contact us', url: '/contact-us' }, { tag: <ThemeSwitcher key={cypher()} /> }],
+      items: [{ tag: <Divider /> }, { label: 'Contact us', url: '/contact-us' }, { tag: <ThemeSwitcher key={cypher()} /> }],
     },
   ],
 };

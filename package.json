@@ -1,25 +1,4 @@
 {
   "name": "remix-drizzle",
-  "version": "1.0.0",
-  "description": "Remix Drizzle template",
-  "license": "MIT",
-  "type": "module",
-  "homepage": "https://github.com/y-react/remix-drizzle#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/y-react/remix-drizzle.git"
-  },
-  "bin": {
-    "index": "src/commands/index.js"
-  },
-  "dependencies": {
-    "commander": "^12.1.0",
-    "confbox": "^0.1.8",
-    "execa": "^9.4.0",
-    "fs-extra": "^11.2.0",
-    "wrangler": "^3.84.1"
-  },
-  "devDependencies": {
-    "typescript": "^5.6.3"
-  }
+  "private": true
 }
